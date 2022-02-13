@@ -11,10 +11,7 @@ SO THAT I can keep a list of books to purchase
 ```
 
 ## Mock-Up
-Please [click here]() to view my live webpage.
-
-And here is my portfolio in action!
-![]()
+Please [click here](https://fathomless-journey-41886.herokuapp.com/) to view my live webpage.
 
 
 ## 
