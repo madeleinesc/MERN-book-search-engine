@@ -30,13 +30,9 @@ const SignupForm = () => {
     }
 
     try {
-      const response = await addUser(userFormState);
+      const {data} = await addUser({variables: {...userFormState}});
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
-
-      const { token, user } = await response.json();
+      const { token, user } = data.addUser;
       console.log(user);
       Auth.login(token);
     } catch (err) {
@@ -67,7 +63,7 @@ const SignupForm = () => {
             placeholder='Your username'
             name='username'
             onChange={handleInputChange}
-            value={userFormData.username}
+            value={userFormState.username}
             required
           />
           <Form.Control.Feedback type='invalid'>Username is required!</Form.Control.Feedback>
@@ -99,7 +95,7 @@ const SignupForm = () => {
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
         </Form.Group>
         <Button
-          disabled={!(userFormData.username && userFormData.email && userFormData.password)}
+          disabled={!(userFormState.username && userFormState.email && userFormState.password)}
           type='submit'
           variant='success'>
           Submit
