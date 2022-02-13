@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 
-import { createUser } from '../utils/API';
+import { useMutation } from '@apollo/client';
+import { ADD_USER  } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const SignupForm = () => {
+  const [ addUser ] = useMutation(ADD_USER);
   // set initial form state
-  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+  const [userFormState, setUserFormState] = useState({ username: '', email: '', password: '' });
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
@@ -14,7 +16,7 @@ const SignupForm = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+    setUserFormState({ ...userFormState, [name]: value });
   };
 
   const handleFormSubmit = async (event) => {
@@ -28,7 +30,7 @@ const SignupForm = () => {
     }
 
     try {
-      const response = await createUser(userFormData);
+      const response = await addUser(userFormState);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
@@ -42,7 +44,7 @@ const SignupForm = () => {
       setShowAlert(true);
     }
 
-    setUserFormData({
+    setUserFormState({
       username: '',
       email: '',
       password: '',
